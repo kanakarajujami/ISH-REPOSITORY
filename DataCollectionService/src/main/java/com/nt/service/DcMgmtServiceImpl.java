@@ -1,12 +1,16 @@
 package com.nt.service;
 
 import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.nt.bindings.ChildrenInputs;
 import com.nt.bindings.CitizenAppRegistrationInputs;
@@ -20,15 +24,24 @@ import com.nt.entity.DcChildrenEntity;
 import com.nt.entity.DcEducationEntity;
 import com.nt.entity.DcIncomeEntity;
 import com.nt.entity.PlanEntity;
+import com.nt.exception.InvalidSSNException;
 import com.nt.repository.CitizenAppRegistrationRepository;
 import com.nt.repository.DcChildrenRepository;
 import com.nt.repository.DcEducationRepositroy;
 import com.nt.repository.DcIncomeRepository;
 import com.nt.repository.IDcCasesRepository;
 import com.nt.repository.PlanRepository;
+
+import reactor.core.publisher.Mono;
 @Service("dcServiceImpl")
 public class DcMgmtServiceImpl implements DcMgmtService {
- @Autowired	
+  @Value("${arm.ssa-web.url}")
+ private String endpointUrl;
+ @Value("${arm.stateName}")
+private String targetState;
+ @Autowired
+ private WebClient client;
+ @Autowired	 
  private CitizenAppRegistrationRepository citizenRepo;
  @Autowired
  private IDcCasesRepository casesRepo;
@@ -87,10 +100,19 @@ public class DcMgmtServiceImpl implements DcMgmtService {
 	public Integer saveChildrenDetails(List<ChildrenInputs> listChildrens) {
        //convert binding object to entity object
 	   listChildrens.forEach(children->{
+		   //call ssa-web service
+		   Mono<String> response=client.get().uri(endpointUrl,children.getSsn()).retrieve().onStatus(HttpStatus.BAD_REQUEST::equals, res->res.bodyToMono(String.class).map(ex->new InvalidSSNException("invalid ssn"))).bodyToMono(String.class);
+			  String stateName=response.block();
+			  //check statename and targetState
+			  if(stateName.equalsIgnoreCase(targetState)) {
 		   DcChildrenEntity childrenEntity=new DcChildrenEntity();
 		  BeanUtils.copyProperties(children, childrenEntity);
 		  childrenRepo.save(childrenEntity);
+			  }//inner if
+			  else
+			  throw new InvalidSSNException("Invalid ssn");
 	   });
+		   
 	     return listChildrens.get(0).getCaseNumber();
 	}
 
