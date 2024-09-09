@@ -9,9 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
-
-@Entity
 @Data
+@Entity
 @Table(name="JRTP_ELIGIBILITY_DETAILS")
 public class EligibilityFDetailsEntity {
 	@Id
@@ -28,6 +27,9 @@ public class EligibilityFDetailsEntity {
 	private LocalDate planStartDate;
 	private LocalDate planEndDate;
 	private Double benfitAmount;
+	private Long bankAccNo;
+	@Column(length = 30)
+	private String bankName;
 	@Column(length=50)
 	private  String denialReason;
 }

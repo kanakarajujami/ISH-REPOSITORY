@@ -41,6 +41,9 @@ public class CitizenAppRegistrationEntity {
 	private String stateName;
 	@Column
 	private LocalDate dob;
+	private Long bankAccNo;
+	@Column(length = 30)
+	private String bankName;
 	@Column(length = 30)
 	private String createBy;
 	@Column(length = 30)
