@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.nt.advice.ExceptionInfo;
 import com.nt.bindings.PlanDetailsInputs;
 import com.nt.bindings.PlanDetailsOutput;
 import com.nt.service.IAdminMgmtService;
@@ -64,4 +66,11 @@ public class AdminOperationsController {
 	  String resultMsg=adminService.changePlanStatusById(planId, status) ;
 	  return new ResponseEntity<String>(resultMsg,HttpStatus.OK);
    }
+  /* @ExceptionHandler(IllegalArgumentException.class)
+   public ResponseEntity<ExceptionInfo> handleIAE(IllegalArgumentException exception){
+	     ExceptionInfo info=new ExceptionInfo();
+	     info.setMessage(exception.getMessage());
+	     info.setCode(3000);   
+	     return new ResponseEntity<ExceptionInfo>(info,HttpStatus.INTERNAL_SERVER_ERROR);
+   }//end of exception hanle*/
 }

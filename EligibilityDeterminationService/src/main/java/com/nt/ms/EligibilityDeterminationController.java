@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nt.bindings.EligibilityDetailsOutput;
 import com.nt.service.IEligibilityDeteminationService;
 @RestController
-@RequestMapping("ed-api")
+@RequestMapping("/ed-api")
 public class EligibilityDeterminationController {
    @Autowired	
   private IEligibilityDeteminationService eligibilityService;

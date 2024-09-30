@@ -130,7 +130,7 @@ public class CorresppondenceMgmtServiceImpl implements CorrespondenseMgmtService
 	    //display eligibility entity  as pdf table
 	     PdfPTable table=new PdfPTable(10);
 	     table.setWidthPercentage(80);
-	     table.setWidths(new float[]{5.0f,5.0f,5.0f,5.0f,5.0f,5.0f,5.0f,5.0f,5.0f,5.0f});
+	     table.setWidths(new float[]{5.0f,5.0f,5.0f,5.0f,5.0f,5.0f,5.0f,5.0f,5.0f,5.0f,5.0f,5.0f});
 	     table.setSpacingBefore(4.0f);
 	     
 	   //perpare heading row cells in the pdf table

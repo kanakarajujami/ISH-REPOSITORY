@@ -1,6 +1,6 @@
 package com.nt.exceptions;
 
-public class InvalidSSNException extends Exception {
+public class InvalidSSNException extends RuntimeException {
 	
   public InvalidSSNException() {
 	    super();

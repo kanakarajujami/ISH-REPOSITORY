@@ -18,6 +18,7 @@ public class CoTriggersEntity {
   private Integer coTriggerId;
   private Integer caseNumber;
   @Lob
+  @Column(length = 2000)
   private  byte[] coNoticePdf; 
   @Column(length=30)
   private String triggerStatus;

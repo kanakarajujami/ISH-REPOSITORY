@@ -2,6 +2,7 @@ package com.nt.ms;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,7 +66,7 @@ public class DataCollectionOperationsController {
 	public ResponseEntity<Integer> saveEducationData(@RequestBody EducationInputs educationinputs){
 		//use service
 		Integer caseNumber=service.saveEducationDetails(educationinputs);
-		return new ResponseEntity<Integer>(caseNumber,HttpStatus.OK);
+		return new ResponseEntity<Integer>(caseNumber,HttpStatus.CREATED);
 	}//end of end point
 	
 	@GetMapping("/summary/{caseNo}")

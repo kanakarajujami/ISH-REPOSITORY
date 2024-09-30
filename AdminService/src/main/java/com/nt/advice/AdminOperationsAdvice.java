@@ -9,13 +9,19 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class AdminOperationsAdvice {
 	//handle illegal argument exception    
-	@ExceptionHandler
-	public ResponseEntity<String> handleIAE(IllegalArgumentException exception) {
-		 return new ResponseEntity<String>(exception.getMessage(),HttpStatus.OK);
+	@ExceptionHandler(IllegalArgumentException.class)
+	public ResponseEntity<ExceptionInfo> handleIAE(IllegalArgumentException exception) {
+		ExceptionInfo info=new ExceptionInfo();
+		info.setMessage(exception.getMessage());
+		info.setCode(3000);
+		 return new ResponseEntity<ExceptionInfo>(info,HttpStatus.OK);
 	}
   //handle all exceptions
-	@ExceptionHandler
-	public ResponseEntity<String> handleAllExceptions(Exception exception){
-		 return new ResponseEntity<String>(exception.getMessage(),HttpStatus.OK);
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<ExceptionInfo> handleAllExceptions(Exception exception){
+		 ExceptionInfo info=new ExceptionInfo();
+		 info.setMessage(exception.getMessage());
+		 info.setCode(3000);
+		 return new ResponseEntity<ExceptionInfo>(info,HttpStatus.OK);
 	}
 }

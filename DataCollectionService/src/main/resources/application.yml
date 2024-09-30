@@ -2,7 +2,7 @@ spring:
   config:
     import: "optional:configserver:"
   application:
-    name: DataCollectionModule
+    name: DataCollectionService
   boot:
     admin:
       client:

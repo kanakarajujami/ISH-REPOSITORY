@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nt.service.IBenfitIssuanceMgmtService;
 
 @RestController
-@RequestMapping("bi-api")
+@RequestMapping("/bi-api")
 public class BenfitIssuanceOperationsController {
 	@Autowired
 	private IBenfitIssuanceMgmtService benfitService;
